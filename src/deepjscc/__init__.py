@@ -1,2 +1,12 @@
-def main() -> None:
-    print("Hello from deepjscc!")
+from __future__ import annotations
+
+from importlib.metadata import PackageNotFoundError, version
+
+
+try:
+    __version__ = version("deepjscc")
+except PackageNotFoundError:  # pragma: no cover
+    __version__ = "0.0.0"
+
+
+__all__ = ["__version__"]

@@ -1,0 +1,40 @@
+# Single source of truth for runs (validated by Pydantic)
+seed: 0
+device: auto # auto|cpu|cuda
+output_dir: runs/mvp
+
+dataset:
+  name: cifar10
+  data_dir: data
+  batch_size: 128
+  num_workers: 0 # Windows-safe default
+  pin_memory: false
+  download: true
+
+model:
+  base_channels: 64
+  latent_channels: 16 # lower => fewer channel symbols (more compression)
+  power_normalize: true
+  output_activation: sigmoid
+
+channel:
+  type: awgn
+  train_snr:
+    mode: uniform # fixed|uniform
+    snr_db: 10
+    min_db: 0
+    max_db: 20
+
+train:
+  epochs: 10
+  lr: 0.001
+  weight_decay: 0.0
+  log_every: 100
+  save_every: 1
+  eval_every: 1
+  amp: false
+  grad_clip_norm: null
+
+eval:
+  snr_db_list: [-5, 0, 5, 10, 15, 20]
+  max_batches: null
