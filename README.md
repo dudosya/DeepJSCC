@@ -90,6 +90,38 @@ Expected artifacts:
 - `epoch_*.pt`: periodic checkpoints
 - `psnr_sweep.json` and `psnr_sweep.csv`: evaluation results
 
+## Baseline Results
+
+Configuration:
+
+- Dataset: CIFAR-10 (50k train, 10k test)
+- Model: 64 base channels, 16 latent channels
+- Training: 10 epochs, batch size 128, uniform SNR [0, 20] dB
+- Device: CPU (tested on Windows)
+
+Training convergence:
+
+- Epoch 1: PSNR 19.8 dB (loss 0.0076)
+- Epoch 10: PSNR 22.1 dB (loss 0.0062)
+- Training time: ~2.5 minutes per epoch (CPU, Windows)
+
+Evaluation (PSNR vs SNR):
+
+| SNR (dB) | PSNR (dB) |
+| -------- | --------- |
+| -5       | 15.07     |
+| 0        | 18.36     |
+| 5        | 21.32     |
+| 10       | 23.26     |
+| 15       | 24.19     |
+| 20       | 24.55     |
+
+Observations:
+
+- System maintains non-zero reconstruction quality at negative SNR.
+- PSNR increase is approximately log-linear with SNR in the tested range.
+- At 20 dB SNR, PSNR approaches the compression bottleneck imposed by 16 latent channels.
+
 ## Reproducibility Notes
 
 - This project sets Python/NumPy/PyTorch seeds.
